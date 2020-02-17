@@ -13,9 +13,12 @@ twine = "*"
 pytest = "*"
 pytest-runner = "*"
 Sphinx = "*"
+ipdb = "*"
+autopep8 = "*"
 
 [packages]
 click = "*"
+pytoml = "*"
 johnny_decimal = {editable = true,path = "."}
 
 [requires]

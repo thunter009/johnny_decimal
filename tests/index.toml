@@ -1,0 +1,14 @@
+[[area]]
+  name = "apple"
+
+  [[area.category]]  # nested array of tables
+    name = "red delicious"
+
+  [[area.category]]
+    name = "granny smith"
+
+[[area]]
+  name = "banana"
+
+[[area]]
+  name = "pear"

@@ -36,7 +36,7 @@ setup(
                 structure",
     entry_points={
         'console_scripts': [
-            'jd = cli:main',
+            'jd = johnny_decimal.cli:cli',
         ],
     },
     install_requires=requirements,
