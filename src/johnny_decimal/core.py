@@ -4,8 +4,10 @@ from pathlib import Path
 from typing import List
 
 import pytoml as toml
+
+from johnny_decimal.exceptions import AttributeNotDefined
+from johnny_decimal.mixins import DirectoryMixin
 from johnny_decimal.utils import default_field
-from johnny_decimal.exceptions import IdNotDefined
 
 
 @dataclass
@@ -24,7 +26,7 @@ class Input:
 
 
 @dataclass
-class Area:
+class Area(DirectoryMixin):
     """
         Areas group categories together.
 
@@ -38,22 +40,13 @@ class Area:
     @property
     def path(self) -> Path:
         if self.id == '':
-            raise IdNotDefined(
+            raise AttributeNotDefined(
                 'Define instance id before accessing path property')
 
         if not self._path:
             path = Path(self.root) / Path(f'{self.id}_{self.name}')
 
         return path
-
-    def mkdir(self) -> None:
-        """
-            Makes a directory from the path property
-        """
-        logging.debug("Creating directory %s", self.path)
-        self.path.mkdir(parents=True, exist_ok=True)
-
-
 
 
 @dataclass

@@ -2,5 +2,5 @@ class AreasNotDefinedException(Exception):
     pass
 
 
-class IdNotDefined(Exception):
+class AttributeNotDefined(Exception):
     pass
