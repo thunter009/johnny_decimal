@@ -2,13 +2,14 @@ import logging
 import sys
 
 import click
-from johnny_decimal.core import Area, AreaRegistry, Input
-from johnny_decimal.exceptions import AreasNotDefinedException
+
+from johnny_decimal.core import Area, Category, Input, Registry
+from johnny_decimal.exceptions import NotDefined
 from johnny_decimal.settings import LOGGING_DATE_FORMAT, LOGGING_FORMAT
 
 LOG_PATH = '.'
 FILE_NAME = __name__
-logging.basicConfig(level=logging.DEBUG,
+logging.basicConfig(level=logging.INFO,
                     datefmt=LOGGING_DATE_FORMAT,
                     format=LOGGING_FORMAT,
                     handlers=[
@@ -77,18 +78,40 @@ def init(ctx,
     areas = index.get('area')
 
     if not areas:
-        raise AreasNotDefinedException("Areas not properly defined in index")
+        raise NotDefined("Area not defined")
 
-    area_holder = []
+    holder = []
     for area in areas:
-        name = area.get('name')
-        if not name:
-            raise AreasNotDefinedException("Area name not supplied")
+        area_name = area.get('name')
+        if not area_name:
+            raise NotDefined("Area not defined")
 
+        area_instance = Area(name=area_name, root=path)
+        categories = area.get('category')
+
+        if not categories:
+            logger.info("Categories not defined for area: %s, skipping...",
+                        area['name'])
+            continue
+
+        for category in categories:
+
+            category_name = category.get("name")
+
+            if not category_name:
+                raise NotDefined(
+                    f"Category not defined for {area} Area")
+
+            category_instance = Category(
+                name=category_name,
+                area=area_instance)
+
+            holder.append(category_instance)
+
+        registry = Registry(categories=holder)
         import ipdb; ipdb.set_trace()
-        area_holder.append(Area(name=name, root=path))
 
-    ar = AreaRegistry(area_holder)
+    # ar = Registry(categories=holder)
     ar.init()
 
 

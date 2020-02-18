@@ -1,6 +1,6 @@
-class AreasNotDefinedException(Exception):
+class NotDefined(Exception):
     pass
 
 
-class AttributeNotDefined(Exception):
+class AttributeNotDefined(NotDefined):
     pass

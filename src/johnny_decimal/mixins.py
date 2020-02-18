@@ -10,5 +10,5 @@ class DirectoryMixin:
         """
             Makes a directory from the path property
         """
-        logging.debug("Creating directory %s", self.path)
+        logging.info("Creating directory %s", self.path)
         self.path.mkdir(parents=True, exist_ok=True)
