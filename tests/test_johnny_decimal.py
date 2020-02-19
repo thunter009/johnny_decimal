@@ -6,15 +6,14 @@ import pytest
 
 from click.testing import CliRunner
 
-from johnny_decimal_cli import johnny_decimal_cli
-from johnny_decimal_cli import cli
+from johnny_decimal.core import johnny_decimal
+from johnny_decimal import cli
 
 
 @pytest.fixture
 def response():
-    """Sample pytest fixture.
-
-    See more at: http://doc.pytest.org/en/latest/fixture.html
+    """
+        Sample pytest fixture.
     """
     # import requests
     # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
