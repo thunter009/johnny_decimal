@@ -5,7 +5,7 @@ from typing import List
 
 import pytoml as toml
 
-from johnny_decimal.exceptions import AttributeNotDefined
+from johnny_decimal.exceptions import AttributeNotDefined, NotDefined
 from johnny_decimal.mixins import DirectoryMixin
 from johnny_decimal.utils import default_field
 
@@ -13,7 +13,7 @@ from johnny_decimal.utils import default_field
 @dataclass
 class Input:
     """
-        Handles user input
+    Handles user input
     """
     _path: str = field()
 
@@ -35,9 +35,9 @@ class Base:
 @dataclass
 class Area(Base, DirectoryMixin):
     """
-        Areas group categories together.
+    Areas group categories together.
 
-        id is defined when passed to an AreaRegistry object.
+    id is defined when passed to an AreaRegistry object.
     """
     root: Path = default_field(Path('.'), repr=False)
 
@@ -56,7 +56,7 @@ class Area(Base, DirectoryMixin):
 @dataclass
 class Category(Base):
     """
-        Categories within each area
+    Categories within each area
     """
     area: Area = field(repr=False)
 
@@ -76,9 +76,9 @@ class Category(Base):
 @dataclass
 class Registry:
     """
-        Generic Registry for collecting individual Area/Category objects and 
-        performing operations on the collected Registry object, assigning 
-        them id's and full file paths
+    Generic Registry for collecting individual Area/Category objects and
+    performing operations on the collected Registry object, assigning
+    them id's and full file paths
     """
     areas: List[Area] = default_field(None)
     categories: List[Category] = default_field(None)
@@ -86,16 +86,17 @@ class Registry:
 
     def __post_init__(self):
         self.style = self._detect_input_style()
+        import ipdb; ipdb.set_trace()
         if self.style == 'areas':
             self.areas = self.get_area_ids()
         elif self.style == 'categories':
             self.areas = self.get_area_ids()
-            self.categories = self._get_category_ids()
+            self.categories = self.get_category_ids()
 
     def __getitem__(self, index):
         if self.style == 'areas':
             return self.areas[index]
-        elif self.style == 'categories':
+        if self.style == 'categories':
             return self.categories[index]
 
     def _detect_input_style(self):
@@ -110,17 +111,19 @@ class Registry:
 
     def get_areas(self):
         """
-            Returns set of all configured Area objects in this Reigstry
+        Returns set of all configured Area objects in this Reigstry
         """
         temp = [cat.area for cat in self.categories]
         return (c for c in temp)
 
-    def get_area_ids(self):
+    def get_area_ids(self, areas: List[Area]) -> List[Area]:
+        """
+        Takes a list of 
+        """
         if not self.areas:
-            import ipdb
-            ipdb.set_trace()
-
-        areas = self.areas
+            areas = self.get_areas()
+        else:
+            areas = self.areas
         index = self._get_index_generator(areas)
         for x in zip(areas, index):
             area = x[0]

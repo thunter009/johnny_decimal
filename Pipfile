@@ -13,8 +13,9 @@ twine = "*"
 pytest = "*"
 pytest-runner = "*"
 Sphinx = "*"
-ipdb = "*"
+pdbpp = "*"
 autopep8 = "*"
+pylint = "*"
 
 [packages]
 click = "*"
@@ -22,4 +23,4 @@ pytoml = "*"
 johnny_decimal = {editable = true,path = "."}
 
 [requires]
-python_version = "3.7"
+python_version = "3.10"

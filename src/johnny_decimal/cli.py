@@ -43,7 +43,7 @@ def cli(ctx):
 
     WIP commands:
 
-    - sync  --> syncs a target directory structure with a provided Johnny
+    - init  --> inits a target directory structure with a provided Johnny
                 Decimals index
     """
     # ctx.command = command
@@ -69,6 +69,59 @@ def init(ctx,
 
     index (required):
     - the path to a valid Johnny Decimals index.toml file.
+
+    path (optional):
+    - the directory path to initialize the JD directory index in
+    """
+    _input = Input(index)
+    index = _input.load()
+    areas = index.get('area')
+
+    if not areas:
+        raise NotDefined("Area not defined")
+
+    holder = []
+    for area in areas:
+        area_name = area.get('name')
+        if not area_name:
+            raise NotDefined("Area not defined")
+
+        area_instance = Area(name=area_name, root=path)
+        categories = area.get('category')
+
+        if not categories:
+            logger.info("Categories not defined for area: %s, skipping...",
+                        area['name'])
+            continue
+
+        for category in categories:
+
+            category_name = category.get("name")
+
+            if not category_name:
+                raise NotDefined(
+                    f"Category not defined for {area} Area")
+
+            category_instance = Category(
+                name=category_name,
+                area=area_instance)
+
+            holder.append(category_instance)
+
+        registry = Registry(categories=holder)
+        import ipdb; ipdb.set_trace()
+
+    # ar = Registry(categories=holder)
+    ar.init()
+
+
+@CONTEXT
+def update(ctx,
+           path):
+    """
+    Updates a Johnny Decimals directory so the 
+    present directory and all sub-directories match the passed index. Searches for index.toml in current directory unless
+    the --index option is passed.
 
     path (optional):
     - the directory path to initialize the JD directory index in
