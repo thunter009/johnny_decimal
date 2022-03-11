@@ -86,7 +86,6 @@ class Registry:
 
     def __post_init__(self):
         self.style = self._detect_input_style()
-        import ipdb; ipdb.set_trace()
         if self.style == 'areas':
             self.areas = self.get_area_ids()
         elif self.style == 'categories':
@@ -132,8 +131,6 @@ class Registry:
         return areas
 
     def get_category_ids(self):
-        import ipdb
-        ipdb.set_trace()
         categories = self.categories
         index = self._get_index_generator(categories)
         for x in zip(categories, index):

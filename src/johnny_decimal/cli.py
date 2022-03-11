@@ -109,7 +109,6 @@ def init(ctx,
             holder.append(category_instance)
 
         registry = Registry(categories=holder)
-        import ipdb; ipdb.set_trace()
 
     # ar = Registry(categories=holder)
     ar.init()
@@ -162,7 +161,6 @@ def update(ctx,
             holder.append(category_instance)
 
         registry = Registry(categories=holder)
-        import ipdb; ipdb.set_trace()
 
     # ar = Registry(categories=holder)
     ar.init()
