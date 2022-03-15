@@ -4,3 +4,7 @@ class NotDefined(Exception):
 
 class AttributeNotDefined(NotDefined):
     pass
+
+
+class InvalidIDException(Exception):
+    pass

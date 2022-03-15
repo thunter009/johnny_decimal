@@ -80,13 +80,15 @@ def init(ctx,
     if not areas:
         raise NotDefined("Area not defined")
 
-    holder = []
+    category_instances = []
+    area_instances = []
     for area in areas:
         area_name = area.get('name')
         if not area_name:
             raise NotDefined("Area not defined")
 
         area_instance = Area(name=area_name, root=path)
+        area_instances.append(area_instance)
         categories = area.get('category')
 
         if not categories:
@@ -106,12 +108,13 @@ def init(ctx,
                 name=category_name,
                 area=area_instance)
 
-            holder.append(category_instance)
+            category_instances.append(category_instance)
 
-        registry = Registry(categories=holder)
-
-    # ar = Registry(categories=holder)
-    ar.init()
+    area_registry = Registry(areas=area_instances)
+    area_registry.init()
+    
+    categories_registry = Registry(categories=category_instances)
+    categories_registry.init()
 
 
 @CONTEXT
