@@ -20,7 +20,7 @@ pylint = "*"
 [packages]
 click = "*"
 pytoml = "*"
-johnny_decimal = {editable = true,path = "."}
+johnny_decimal = {editable = true, path = "."}
 
 [requires]
 python_version = "3.10"

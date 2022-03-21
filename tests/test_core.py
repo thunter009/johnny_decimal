@@ -1,4 +1,3 @@
-import pdb
 import shutil
 from pathlib import Path
 
@@ -102,7 +101,25 @@ class TestReigstry:
                                  actual_category_registry: Registry):
 
         assert actual_area_registry._detect_input_style() == 'areas'
-        assert actual_category_registry._detect_input_style() == 'categories'
+        # assert actual_category_registry._detect_input_style() == 'categories'
+
+    def test__get_index_generator(self, 
+                                  actual_area_registry: Registry,
+                                  actual_category_registry: Registry):
+
+        pass
+
+    def test_get_areas(self, 
+                       actual_area_registry: Registry,
+                       actual_category_registry: Registry):
+
+        # expected_area_set = {
+        #     Area(name='test-area-2'), 
+        #     Area(name='test-area-1')
+        # }
+        # assert actual_area_registry.get_areas() == expected_area_set
+        # assert actual_category_registry.get_areas() == expected_area_set
+        pass
 
     def test_area_get_max_id_range(self, actual_area_registry: Registry):
 
